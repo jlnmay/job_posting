@@ -1,0 +1,2 @@
+﻿window.axios = require('axios');
+

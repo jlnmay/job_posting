@@ -1,0 +1,9 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Jobs", "Index", "Job", routeValues: null, htmlAttributes: new { id = "myJobsLink" })</li>
+    </ul>
+}
+
+

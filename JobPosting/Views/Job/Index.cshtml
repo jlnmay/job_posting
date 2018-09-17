@@ -1,0 +1,94 @@
+﻿@model IEnumerable<JobPosting.Models.JobViewModel>
+    
+@{
+    ViewBag.Title = "My Jobs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_AddButton")
+<div class="row">
+    <div class="col-md-offset-3 col-md-6">
+        <div class="list-group">
+            @if (@Model.Count() > 0)
+            {
+                foreach (var job in Model)
+                {
+                    @Html.Partial("~/Views/Job/_Job.cshtml",
+         new ViewDataDictionary { { "title", @job.Title }, { "description", @job.Description}, { "contactEmail", @job.ContactEmail },
+                            { "origin", "Job" }, { "id", @job.Id } });
+                }
+            }
+            else
+            {
+                @Html.Partial("~/Views/Job/_Message.cshtml", new ViewDataDictionary { { "message", "You haven't posted jobs yet" } });
+            }
+        </div>
+    </div>
+    <div id="jobModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <form id="jobForm" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Title:</label>
+                            <div class="col-md-9">
+                                <input name="title" id="txtTitle" type="text" class="form-control" placeholder="Title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Description:</label>
+                            <div class="col-md-9">
+                                <textarea name="description" id="txtDescription" rows="3" type="text" class="form-control" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Contact Email:</label>
+                            <div class="col-md-9">
+                                <input name="contactEmail" id="txtContactEmail" type="text" class="form-control" placeholder="Contact Email">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button onclick="Jobs.validate();" type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to delete the row?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button onclick="Jobs.deleteRow();" type="button" class="btn btn-primary">Delete</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+@section pageLevelScripts {
+    <script src="~/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js"></script>
+<script src="~/assets/global/plugins/bootstrap-growl/jquery.bootstrap-growl.min.js"></script>
+}
+
+@section scripts {
+    <script type="text/javascript">
+        var Jobs = new Jobs();
+        Jobs.init();
+    </script>
+}
+

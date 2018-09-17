@@ -1,0 +1,17 @@
+﻿<div id="job@(ViewData["id"])"  class="modal-content">
+    <div class="modal-body">
+        <div class="title">
+            <h4>@ViewData["title"].ToString()</h4>
+            @if (@ViewData["origin"].ToString() == "Job")
+            {
+                @Html.Partial("_Buttons", new ViewDataDictionary { { "id", @ViewData["id"] } });
+            }
+        </div>
+        <div class="text-description">
+            <p>@ViewData["description"].ToString()</p>
+        </div>
+        <div> 
+            <small><b>Contact email:</b> @ViewData["contactEmail"].ToString()</small>
+        </div>
+    </div>
+</div>
